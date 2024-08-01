@@ -1,0 +1,80 @@
+{
+    "app": {
+      "name": "SurveyorApp",
+      "version": "1.0.0",
+      "platforms": ["iOS", "Android"],
+      "supportedLanguages": ["en", "es", "fr"]
+    },
+    "api": {
+      "baseURL": "https://api.picarro.com",
+      "endpoints": {
+        "login": "/auth/login",
+        "reports": "/reports",
+        "indications": "/indications",
+        "investigations": "/investigations",
+        "leaks": "/leaks",
+        "sync": "/sync",
+        "userProfile": "/user/profile"
+      },
+      "timeout": 30000
+    },
+    "features": {
+      "enableOfflineMode": true,
+      "enableBLEIntegration": true,
+      "enableGPS": true,
+      "enableNotifications": true,
+      "enableLogging": true
+    },
+    "integration": {
+      "maps": {
+        "provider": "Mapbox",
+        "mapbox": {
+          "accessToken": "YOUR_MAPBOX_ACCESS_TOKEN"
+        },
+        "googleMaps": {
+          "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+        }
+      },
+      "identityManagement": {
+        "provider": "KeyCloak",
+        "keycloak": {
+          "realm": "picarro",
+          "clientId": "leak-investigation-app",
+          "url": "https://identity.picarro.com/auth"
+        }
+      }
+    },
+    "offlineMode": {
+      "syncInterval": 18000,
+      "dataExpiry": 259200
+    },
+    "roles": {
+      "investigator": {
+        "permissions": ["viewReports", "addLeak", "editLeak", "deleteLeak"]
+      },
+      "utilityAdministrator": {
+        "permissions": ["viewAllReports", "manageSettings"]
+      },
+      "picarroSupport": {
+        "permissions": ["viewAllCustomerData", "debug"]
+      }
+    },
+    "hardwareCapabilities": {
+      "GPS": true,
+      "Bluetooth": true,
+      "Audio": false,
+      "Notifications": true
+    },
+    "syncSettings": {
+      "autoSync": true,
+      "manualSyncOption": true,
+      "retryInterval": 5000,
+      "maxRetries": 3
+    },
+    "logging": {
+      "level": "debug",
+      "remoteLogging": true,
+      "logFilePath": "/logs/app.log"
+    }
+  }
+  

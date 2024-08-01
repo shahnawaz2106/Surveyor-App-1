@@ -1,118 +1,83 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+// // src/App.tsx
 
+// import React from 'react';
+// import {SafeAreaView} from 'react-native';
+// import CustomMapComponent from './src/components/map/CustomMapComponent';
+// import useBluetoothFunctionalityFactory from './src/hooks/useBluetoothFunctionalityFactory';
+
+// const App: React.FC = () => {
+//   const ConnectToDevice = useBluetoothFunctionalityFactory('ConnectToDevice');
+//   const SendDataToBackend =
+//     useBluetoothFunctionalityFactory('SendDataToBackend');
+//   const RealTimeDataStreaming = useBluetoothFunctionalityFactory(
+//     'RealTimeDataStreaming',
+//   );
+//   const BreadcrumbTracking =
+//     useBluetoothFunctionalityFactory('BreadcrumbTracking');
+//   const OfflineModeSupport =
+//     useBluetoothFunctionalit  yFactory('OfflineModeSupport');
+//   const BackgroundProcessing = useBluetoothFunctionalityFactory(
+//     'BackgroundProcessing',
+//   );
+
+//   return (
+//     <Provider store={store}>
+//       <SafeAreaView>
+//         <CustomMapComponent type="MapView" />
+//         <CustomMapComponent type="MapMarker" />
+//         <CustomMapComponent type="UserLocation" />
+//         <CustomMapComponent type="BreadcrumbTrail" />
+//         <CustomMapComponent type="DataOverlay" />
+//         <CustomMapComponent type="OfflineCaching" />
+//         <CustomMapComponent type="TileDownload" />
+//         <CustomMapComponent type="GestureHandling" />
+//         <CustomMapComponent type="ClickAndDrag" />
+//         <CustomMapComponent type="SearchFunctionality" />
+//         <CustomMapComponent type="FilterOptions" />
+//         <CustomMapComponent type="DrawingTools" />
+//         <CustomMapComponent type="Annotations" />
+//         <CustomMapComponent type="APIIntegration" />
+//         <CustomMapComponent type="DataSync" />
+
+//         <ConnectToDevice deviceId="RKI12345" />
+//         <RealTimeDataStreaming deviceId="RKI12345" />
+//         <OfflineModeSupport data={{leakLevel: 'Severe'}} />
+//         <BreadcrumbTracking deviceData={{location: 'someLocation'}} />
+//         <BackgroundProcessing />
+//       </SafeAreaView>
+//     </Provider>
+//   );
+// };
+
+// export default App;
+
+
+
+
+
+
+
+
+
+// src/App.tsx
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { SafeAreaView } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './src/store';
+import BreadcrumbTrail from './src/components/map/BreadcrumbTrail';
+import BreadcrumbTracking from './src/services/bluetooth/BreadcrumbTracking';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const App: React.FC = () => {
+  const deviceData = { location: 'someLocation', leakLevel: 'Severe' }; // Sample data
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView>
+        <BreadcrumbTracking deviceData={deviceData} />
+        <BreadcrumbTrail />
+      </SafeAreaView>
+    </Provider>
   );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
